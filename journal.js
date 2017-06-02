@@ -192,17 +192,17 @@ var Journal = function (){
         modal.innerHTML += "<h1>Journal Logger System v" + version + "</h1>";
 
         modal.innerHTML += "<div>" +
-            "<div style='width: 100; display: inline-block'><strong>Level</strong></div>" +
-            "<div style='width: 150; display: inline-block'><strong>File</strong></div>" +
-            "<div style='width: 150; display: inline-block'><strong>Function</strong></div>" +
+            "<div style='width: 100px; display: inline-block'><strong>Level</strong></div>" +
+            "<div style='width: 150px; display: inline-block'><strong>File</strong></div>" +
+            "<div style='width: 150px; display: inline-block'><strong>Function</strong></div>" +
             "<div style='width: " + (window.innerWidth - 500) + "px; display: inline-block'><strong>Message</strong></div></div>";
 
         for (var idx in logs) {
             var color = logs[idx].ident.level === "error" ? "#FFE0E0" : (logs[idx].ident.level === "warn") ? "#FFFFE0" : "#F9F9F9";
             var msgpart = "<div style='background: " + color + "'>" +
-                "<div style='width: 100; display: inline-block'>" + logs[idx].ident.level.toUpperCase() + "</div>" +
-                "<div style='width: 150; display: inline-block'>" + logs[idx].ident.file + "</div>" +
-                "<div style='width: 150; display: inline-block'>" + (logs[idx].ident.function ? logs[idx].ident.function : "")+ "</div>" +
+                "<div style='width: 100px; display: inline-block'>" + logs[idx].ident.level.toUpperCase() + "</div>" +
+                "<div style='width: 150px; display: inline-block'>" + logs[idx].ident.file + "</div>" +
+                "<div style='width: 150px; display: inline-block'>" + (logs[idx].ident.function ? logs[idx].ident.function : "")+ "</div>" +
                 "<div style='width: " + (window.innerWidth - 500) + "px; display: inline-block'>";
 
             for (var adx in logs[idx].arguments) {
