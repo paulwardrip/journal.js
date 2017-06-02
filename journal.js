@@ -1,5 +1,5 @@
 var Journal = function (){
-    var version = "1.0.4";
+    var version = "1.0.5";
 
     var level = localStorage.getItem("Journal-Level") || "warn";
     var loggers = JSON.parse(localStorage.getItem("Journal-Loggers")) || [];
@@ -98,7 +98,6 @@ var Journal = function (){
         identity.file = (stacktop.indexOf(".js") > -1) ?
             stacktop.substr(0, stacktop.indexOf(".js") + 3) :
             stacktop.substr(0, stacktop.indexOf(".html") + 5);
-        c.info (identity);
         return identity;
     }
 
