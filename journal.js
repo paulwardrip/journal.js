@@ -1,18 +1,20 @@
 var Journal = function (){
-    var version = "1.0.0";
+    var version = "1.0.1";
 
     var level = localStorage.getItem("Journal-Level") || "warn";
     var loggers = localStorage.getItem("Journal-Loggers") || [];
 
     var objreftable = [];
-
+/*
     var loggersFunctions = {};
     var loggersFiles = {};
-
+    
+    
     for (var idx in loggers) {
         loggersFunctions[loggers[idx].function] = loggers[idx];
         loggersFiles[loggers[idx].file] = loggers[idx];
     }
+    */
 
     var logs = [];
     
@@ -30,6 +32,31 @@ var Journal = function (){
         return "warn";
     }
 
+    function mostSpecific(ident){
+        var both, func, file;
+        
+        loggers.forEach(function(log){
+            if (log.function) {
+                if (log.function === ident.function) {
+                    if (log.file && log.file === ident.file) {
+                        both = log;
+                    } else {
+                        func = log;
+                    }
+                } else {
+                    return
+                }
+            } else if (log.file) {
+                if (log.file === ident.file) {
+                    file = log;
+                } else {
+                    return;
+                }
+            }
+        });
+        
+        return both || func || file || { level: level };
+    }
 
     function setLevel(lv, func, file) {
         if (lv !== "debug" && lv !== "info" && lv !== "warn" && lv !== "error" && lv !== "off") {
@@ -45,9 +72,24 @@ var Journal = function (){
                 file: file,
                 level: lv
             };
-            loggers.push(ident);
+            
+            var dopush = true;
+            for (var idx in loggers) {
+                if (loggers[idx].function === ident.function
+                   && loggers[idx].file === ident.file) {
+                   loggers[idx].level = ident.level;
+                   dopush = false;
+                   break;
+                }
+            }
+            if (dopush){
+                loggers.push(ident);
+            }
+            
+            /*
             loggersFunctions[ident.function] = ident;
             loggersFiles[ident.file] = ident;
+            */
         }
         return lv;
     }
@@ -70,9 +112,11 @@ var Journal = function (){
     }
 
     function isLevelActive(ident) {
-        var toident = loggersFunctions[ident.function];
+        /*var toident = loggersFunctions[ident.function];
         if (!toident || (toident.file && toident.file !== ident.file)) toident = loggersFiles[ident.file];
         if (!toident) toident = { level: level };
+*/
+        var toident = mostSpecific(ident);
 
         var l = {
             debug: false,
