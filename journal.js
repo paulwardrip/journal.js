@@ -1,5 +1,5 @@
 var Journal = function (){
-    var version = "1.0.1";
+    var version = "1.0.2";
 
     var level = localStorage.getItem("Journal-Level") || "warn";
     var loggers = JSON.parse(localStorage.getItem("Journal-Loggers")) || [];
