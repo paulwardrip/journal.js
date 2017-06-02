@@ -1,6 +1,6 @@
 {
   "name": "journal",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "journal.js",
   "private": false,
   "repository": "https://github.com/paulwardrip/journal.js.git",
