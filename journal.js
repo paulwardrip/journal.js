@@ -2,19 +2,9 @@ var Journal = function (){
     var version = "1.0.1";
 
     var level = localStorage.getItem("Journal-Level") || "warn";
-    var loggers = localStorage.getItem("Journal-Loggers") || [];
+    var loggers = JSON.parse(localStorage.getItem("Journal-Loggers")) || [];
 
     var objreftable = [];
-/*
-    var loggersFunctions = {};
-    var loggersFiles = {};
-    
-    
-    for (var idx in loggers) {
-        loggersFunctions[loggers[idx].function] = loggers[idx];
-        loggersFiles[loggers[idx].file] = loggers[idx];
-    }
-    */
 
     var logs = [];
     
@@ -82,14 +72,12 @@ var Journal = function (){
                    break;
                 }
             }
+
             if (dopush){
                 loggers.push(ident);
             }
-            
-            /*
-            loggersFunctions[ident.function] = ident;
-            loggersFiles[ident.file] = ident;
-            */
+
+            localStorage.setItem("Journal-Loggers", JSON.stringify(loggers));
         }
         return lv;
     }
@@ -112,10 +100,6 @@ var Journal = function (){
     }
 
     function isLevelActive(ident) {
-        /*var toident = loggersFunctions[ident.function];
-        if (!toident || (toident.file && toident.file !== ident.file)) toident = loggersFiles[ident.file];
-        if (!toident) toident = { level: level };
-*/
         var toident = mostSpecific(ident);
 
         var l = {
@@ -256,6 +240,9 @@ var Journal = function (){
         log: info,
         setLevel: setLevel,
         clearLevels: clearLevels,
-        show: show
+        show: show,
+        levels: function() {
+            return(loggers);
+        }
     }
 }();
