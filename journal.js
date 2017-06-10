@@ -138,7 +138,10 @@ var Journal = function (){
             logs.push({ ident: ident, arguments: arguments });
 
             if (isLevelActive(ident)){
-                c[lv].apply(console, arguments);
+                var aarr = Array.prototype.slice.call(arguments);
+                var lwhere = "@ " + (ident.function ? ident.function + "() in " : "") + ident.file + ":" + ident.line;
+                aarr.push(lwhere);
+                c[lv].apply(console, aarr);
             }
         }
     }
